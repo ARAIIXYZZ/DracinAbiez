@@ -1,9 +1,9 @@
-// Enhanced JavaScript untuk YouTube Embed dengan Custom Controls
+// Enhanced JavaScript untuk YouTube Embed dengan Cropping
 document.addEventListener('DOMContentLoaded', function() {
     // Elements
     const videoPlaceholder = document.getElementById('video-placeholder');
     const playOverlay = document.getElementById('play-overlay');
-    const youtubeEmbed = document.getElementById('youtube-embed');
+    const youtubeCropped = document.getElementById('youtube-cropped');
     const customControls = document.getElementById('custom-controls');
     
     // Custom control buttons
@@ -21,9 +21,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    // Initialize YouTube Player dengan parameter yang lebih ketat
+    // Initialize YouTube Player dengan parameter yang sangat ketat
     window.onYouTubeIframeAPIReady = function() {
-        youtubePlayer = new YT.Player('youtube-embed', {
+        youtubePlayer = new YT.Player('youtube-cropped', {
             height: '100%',
             width: '100%',
             videoId: 'oeJ3JHggXVA',
@@ -39,11 +39,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 'playsinline': 1,
                 'enablejsapi': 1,
                 'origin': window.location.origin,
-                'widget_referrer': window.location.href,
-                // Parameter untuk menyembunyikan elemen UI
+                // Parameter tambahan untuk menyembunyikan UI
                 'cc_load_policy': 0,
                 'hl': 'id',
-                'cc_lang_pref': 'id'
+                'cc_lang_pref': 'id',
+                'autohide': 1,
+                'wmode': 'transparent'
             },
             events: {
                 'onReady': onPlayerReady,
@@ -53,11 +54,11 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     function onPlayerReady(event) {
-        console.log('YouTube Player Ready');
+        console.log('YouTube Player Ready dengan Cropping');
         customControls.style.display = 'flex';
         
-        // Tambahkan CSS untuk menyembunyikan elemen YouTube
-        hideYouTubeElements();
+        // Nonaktifkan semua interaksi dengan iframe
+        disableYouTubeInteractions();
     }
 
     function onPlayerStateChange(event) {
@@ -66,9 +67,6 @@ document.addEventListener('DOMContentLoaded', function() {
             playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
             videoPlaceholder.classList.add('hidden');
             createClickParticles({ clientX: window.innerWidth/2, clientY: window.innerHeight/2 });
-            
-            // Sembunyikan elemen YouTube setelah video mulai diputar
-            setTimeout(hideYouTubeElements, 100);
         } else if (event.data === YT.PlayerState.PAUSED) {
             isPlaying = false;
             playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
@@ -77,66 +75,37 @@ document.addEventListener('DOMContentLoaded', function() {
             playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
             videoPlaceholder.classList.remove('hidden');
         }
-        
-        // Sembunyikan elemen YouTube secara berkala
-        setTimeout(hideYouTubeElements, 500);
     }
 
-    // Fungsi untuk menyembunyikan elemen YouTube
-    function hideYouTubeElements() {
-        const iframe = document.querySelector('.youtube-embed-container iframe');
+    // Fungsi untuk menonaktifkan interaksi dengan YouTube iframe
+    function disableYouTubeInteractions() {
+        const iframe = document.querySelector('.youtube-cropped-container iframe');
         if (iframe) {
-            try {
-                // Coba akses document iframe
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-                
-                // Sembunyikan berbagai elemen YouTube
-                const selectors = [
-                    '.ytp-chrome-top',
-                    '.ytp-title-channel',
-                    '.ytp-title-text',
-                    '.ytp-title-link',
-                    '.ytp-title',
-                    '.ytp-watermark',
-                    '.ytp-show-cards-title',
-                    '.ytp-chrome-controls',
-                    '.ytp-pause-overlay',
-                    '.ytp-ce-element'
-                ];
-                
-                selectors.forEach(selector => {
-                    const elements = iframeDoc.querySelectorAll(selector);
-                    elements.forEach(el => {
-                        el.style.display = 'none';
-                        el.style.opacity = '0';
-                        el.style.visibility = 'hidden';
-                    });
-                });
-            } catch (e) {
-                // Cross-origin restriction, gunakan metode lain
-                console.log('Tidak bisa mengakses iframe document karena cross-origin');
+            iframe.style.pointerEvents = 'none';
+            
+            // Tambahkan overlay transparan untuk mencegah klik
+            const overlay = document.createElement('div');
+            overlay.style.position = 'absolute';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.width = '100%';
+            overlay.style.height = '100%';
+            overlay.style.zIndex = '10';
+            overlay.style.cursor = 'pointer';
+            overlay.addEventListener('click', handleVideoClick);
+            
+            youtubeCropped.parentNode.appendChild(overlay);
+        }
+    }
+
+    function handleVideoClick() {
+        if (youtubePlayer) {
+            if (isPlaying) {
+                youtubePlayer.pauseVideo();
+            } else {
+                youtubePlayer.playVideo();
             }
         }
-        
-        // Tambahkan CSS untuk menyembunyikan elemen
-        const style = document.createElement('style');
-        style.textContent = `
-            .ytp-chrome-top,
-            .ytp-title-channel,
-            .ytp-title-text,
-            .ytp-title-link,
-            .ytp-title,
-            .ytp-chrome-controls,
-            .ytp-watermark,
-            .ytp-show-cards-title,
-            .ytp-pause-overlay,
-            .ytp-ce-element {
-                display: none !important;
-                opacity: 0 !important;
-                visibility: hidden !important;
-            }
-        `;
-        document.head.appendChild(style);
     }
 
     // Click on video placeholder to play
@@ -156,9 +125,6 @@ document.addEventListener('DOMContentLoaded', function() {
             playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
             videoPlaceholder.classList.add('hidden');
             createClickParticles({ clientX: window.innerWidth/2, clientY: window.innerHeight/2 });
-            
-            // Sembunyikan elemen YouTube
-            setTimeout(hideYouTubeElements, 100);
         }
     }
 
@@ -169,9 +135,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 youtubePlayer.pauseVideo();
             } else {
                 youtubePlayer.playVideo();
-                setTimeout(hideYouTubeElements, 100);
             }
         }
+        createButtonParticles(this);
     });
 
     muteBtn.addEventListener('click', function() {
@@ -223,10 +189,10 @@ document.addEventListener('DOMContentLoaded', function() {
     initFloatingParticles();
     initSparkleEffects();
 
-    console.log('Dracin Abiez Landing Page Loaded - Enhanced YouTube Player');
+    console.log('Dracin Abiez Landing Page Loaded - YouTube dengan Cropping');
 });
 
-// Particle Systems
+// Particle Systems (tetap sama)
 function initParticleCanvas() {
     const canvas = document.getElementById('particle-canvas');
     const ctx = canvas.getContext('2d');
