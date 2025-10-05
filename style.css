@@ -237,6 +237,7 @@ body {
     max-width: 320px;
     margin: 0 auto;
     aspect-ratio: 9/16;
+    background: #000;
 }
 
 .video-wrapper {
@@ -301,7 +302,7 @@ body {
     box-shadow: 0 0 30px rgba(233, 30, 99, 0.6);
 }
 
-/* YouTube Embed */
+/* YouTube Embed - HIDE ALL YOUTUBE ELEMENTS */
 .youtube-embed-container {
     position: absolute;
     top: 0;
@@ -318,10 +319,18 @@ body {
     border-radius: 12px;
 }
 
-/* Hide YouTube Controls dengan CSS */
-.youtube-embed-container iframe {
-    /* Sembunyikan kontrol YouTube */
-    position: relative;
+/* CSS untuk menyembunyikan elemen YouTube */
+.ytp-chrome-top,
+.ytp-title-channel,
+.ytp-title-text,
+.ytp-title-link,
+.ytp-title,
+.ytp-chrome-controls,
+.ytp-watermark,
+.ytp-show-cards-title {
+    display: none !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
 }
 
 /* Custom Video Controls */
