@@ -246,12 +246,13 @@ body {
     height: 100%;
 }
 
-/* YouTube Container */
+/* YouTube Container dengan Cropping */
 .youtube-container {
     position: relative;
     width: 100%;
     height: 100%;
     background: #000;
+    overflow: hidden;
 }
 
 .video-placeholder {
@@ -302,35 +303,23 @@ body {
     box-shadow: 0 0 30px rgba(233, 30, 99, 0.6);
 }
 
-/* YouTube Embed - HIDE ALL YOUTUBE ELEMENTS */
-.youtube-embed-container {
+/* YouTube Cropped Container - FIXED CROPPING */
+.youtube-cropped-container {
     position: absolute;
-    top: 0;
+    top: -20%; /* Crop 20% dari atas */
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 140%; /* Tambah tinggi untuk compensate cropping */
     z-index: 1;
+    overflow: hidden;
 }
 
-.youtube-embed-container iframe {
+.youtube-cropped-container iframe {
     width: 100%;
     height: 100%;
     border: none;
-    border-radius: 12px;
-}
-
-/* CSS untuk menyembunyikan elemen YouTube */
-.ytp-chrome-top,
-.ytp-title-channel,
-.ytp-title-text,
-.ytp-title-link,
-.ytp-title,
-.ytp-chrome-controls,
-.ytp-watermark,
-.ytp-show-cards-title {
-    display: none !important;
-    opacity: 0 !important;
-    visibility: hidden !important;
+    /* Hilangkan semua pointer events di iframe */
+    pointer-events: none;
 }
 
 /* Custom Video Controls */
@@ -517,6 +506,12 @@ body {
         aspect-ratio: 9/16;
     }
     
+    /* Adjust cropping untuk mobile */
+    .youtube-cropped-container {
+        top: -18%;
+        height: 136%;
+    }
+    
     .tiktok-cta {
         padding: 12px;
     }
@@ -545,6 +540,12 @@ body {
         width: 50px;
         height: 50px;
         font-size: 20px;
+    }
+    
+    /* Adjust cropping lebih banyak untuk screen kecil */
+    .youtube-cropped-container {
+        top: -22%;
+        height: 144%;
     }
 }
 
