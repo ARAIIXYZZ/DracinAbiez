@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
         youtubePlayer = new YT.Player('youtube-cropped', {
             height: '100%',
             width: '100%',
-            videoId: 'oeJ3JHggXVA',
+            videoId: 'vXsTBYCjPlQ',
             playerVars: {
                 'autoplay': 0,
                 'controls': 0,
