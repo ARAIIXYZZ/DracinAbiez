@@ -5,7 +5,31 @@
     box-sizing: border-box;
     font-family: 'Poppins', 'Segoe UI', sans-serif;
 }
+/* Native Banner Ads Styling */
+.native-banner-ads {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    margin-bottom: 15px;
+}
 
+/* Social Bar Ads Styling */
+.social-bar-ads {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Adjust main content untuk social bar */
+.main-content {
+    margin-bottom: 60px; /* Biar gak ketutup social bar */
+}
 body {
     background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
     color: #fff;
