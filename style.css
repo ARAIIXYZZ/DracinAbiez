@@ -1,74 +1,274 @@
+/* Reset dan Base Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
 }
 
 body {
-    background: #0c0c0c;
-    color: white;
+    background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+    color: #fff;
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: auto;
+    position: relative;
 }
 
+/* Container */
 .container {
     width: 100%;
-    max-width: 400px;
-    padding: 20px;
+    max-width: 380px;
+    padding: 15px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    position: relative;
+    z-index: 3;
 }
 
+/* Main Content */
 .main-content {
+    background: rgba(25, 25, 35, 0.95);
+    border-radius: 15px;
+    padding: 25px 15px;
+    width: 100%;
     text-align: center;
+    box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+    margin: 10px 0;
 }
 
-.name {
-    font-size: 24px;
-    font-weight: bold;
+.main-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #673ab7, #e91e63, #2196f3);
+}
+
+/* Name Container */
+.name-container {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.main-name {
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(45deg, #ffffff, #e0e0e0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    line-height: 1.1;
+}
+
+.name-underline {
+    width: 70px;
+    height: 2px;
+    background: linear-gradient(90deg, #673ab7, #e91e63);
+    margin: 0 auto;
+    border-radius: 2px;
+}
+
+/* Tagline */
+.tagline {
+    font-size: 13px;
+    color: #b8b8b8;
     margin-bottom: 20px;
-    color: #fff;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+}
+
+/* Video Section */
+.video-section {
+    margin-bottom: 20px;
 }
 
 .video-container {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
     width: 100%;
-    max-width: 300px;
-    margin: 0 auto 20px;
+    max-width: 280px;
+    margin: 0 auto;
     aspect-ratio: 9/16;
 }
 
-.video-placeholder {
+.video-wrapper {
+    position: relative;
     width: 100%;
     height: 100%;
-    background: #333;
-    border-radius: 10px;
+}
+
+.video-placeholder {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    cursor: pointer;
+}
+
+.video-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.play-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 50px;
+    height: 50px;
+    background: rgba(103, 58, 183, 0.8);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #888;
+    font-size: 20px;
+    color: white;
+    transition: all 0.3s ease;
 }
 
-.video-embed {
-    width: 100%;
-    height: 100%;
+.video-placeholder:hover .play-overlay {
+    background: rgba(233, 30, 99, 0.9);
+    transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* TikTok Section */
+.tiktok-section {
+    margin: 15px 0;
 }
 
 .tiktok-cta {
-    font-size: 14px;
-    color: #ccc;
-    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tiktok-cta i.fab {
+    font-size: 24px;
+    color: #ff0050;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.tiktok-cta p {
+    font-size: 12px;
+    color: #b8b8b8;
+    margin-bottom: 12px;
     line-height: 1.4;
 }
 
 .tiktok-cta strong {
     color: #fff;
+    font-weight: 600;
 }
 
-.ads-space {
-    background: #1a1a1a;
-    padding: 30px 20px;
+.tiktok-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #ff0050, #00f2ea);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 12px;
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 10px rgba(255, 0, 80, 0.3);
+}
+
+.tiktok-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 15px rgba(255, 0, 80, 0.4);
+}
+
+/* Ads Container */
+.ads-container {
+    margin-top: 15px;
+}
+
+.ads-placeholder {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px dashed rgba(255, 255, 255, 0.2);
     border-radius: 8px;
-    color: #666;
-    font-size: 14px;
+    padding: 20px 15px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 12px;
+}
+
+/* Responsive Design untuk Android */
+@media (max-width: 480px) {
+    .container {
+        padding: 10px 8px;
+        max-width: 100%;
+    }
+    
+    .main-content {
+        padding: 20px 12px;
+        border-radius: 12px;
+    }
+    
+    .main-name {
+        font-size: 24px;
+    }
+    
+    .tagline {
+        font-size: 12px;
+    }
+    
+    .video-container {
+        max-width: 260px;
+    }
+    
+    .tiktok-cta {
+        padding: 12px;
+    }
+    
+    .tiktok-cta p {
+        font-size: 11px;
+    }
+}
+
+@media (max-width: 360px) {
+    .video-container {
+        max-width: 240px;
+    }
+    
+    .main-name {
+        font-size: 22px;
+    }
+}
+
+/* Simple Scrollbar */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb {
+    background: #673ab7;
+    border-radius: 4px;
 }
