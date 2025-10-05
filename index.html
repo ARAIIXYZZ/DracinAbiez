@@ -30,16 +30,34 @@
             <div class="video-section">
                 <div class="video-container">
                     <div class="video-wrapper">
-                        <!-- Video Placeholder -->
-                        <div class="video-placeholder">
-                            <div class="play-overlay">
-                                <i class="fas fa-play"></i>
+                        <!-- YouTube Embed dengan Custom Controls -->
+                        <div class="youtube-container" id="youtube-container">
+                            <div class="video-placeholder" id="video-placeholder">
+                                <div class="play-overlay" id="play-overlay">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                                <img src="https://img.youtube.com/vi/oeJ3JHggXVA/maxresdefault.jpg" 
+                                     alt="Drama China Preview" class="video-thumbnail" id="video-thumbnail">
                             </div>
-                            <img src="https://via.placeholder.com/360x640/673ab7/ffffff?text=Drama+China+Preview" 
-                                 alt="Drama China Preview" class="video-thumbnail">
+                            <div class="youtube-embed-container" id="youtube-embed">
+                                <!-- YouTube iframe akan dimasukkan via JavaScript -->
+                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <!-- Custom Video Controls -->
+            <div class="custom-controls" id="custom-controls">
+                <button class="control-btn" id="play-pause-btn">
+                    <i class="fas fa-play"></i>
+                </button>
+                <button class="control-btn" id="mute-btn">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+                <button class="control-btn" id="fullscreen-btn">
+                    <i class="fas fa-expand"></i>
+                </button>
             </div>
 
             <!-- TikTok CTA Section -->
