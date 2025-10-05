@@ -13,8 +13,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: auto;
+    overflow-x: hidden;
     position: relative;
+    width: 100%;
 }
 
 /* Particle Canvas */
@@ -99,11 +100,11 @@ body {
     }
 }
 
-/* Container */
+/* Container - FIXED FOR MOBILE */
 .container {
     width: 100%;
-    max-width: 380px;
-    padding: 15px 10px;
+    max-width: 100%;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -113,12 +114,13 @@ body {
     z-index: 3;
 }
 
-/* Main Content */
+/* Main Content - FIXED FOR MOBILE */
 .main-content {
     background: rgba(25, 25, 35, 0.95);
     border-radius: 15px;
-    padding: 25px 15px;
+    padding: 20px 15px;
     width: 100%;
+    max-width: 400px;
     text-align: center;
     box-shadow: 
         0 10px 25px rgba(0, 0, 0, 0.3),
@@ -126,7 +128,7 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.1);
     position: relative;
     overflow: hidden;
-    margin: 10px 0;
+    margin: 5px 0;
     backdrop-filter: blur(10px);
 }
 
@@ -222,7 +224,8 @@ body {
 
 /* Video Section */
 .video-section {
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    width: 100%;
 }
 
 .video-container {
@@ -231,15 +234,9 @@ body {
     overflow: hidden;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
     width: 100%;
-    max-width: 280px;
+    max-width: 320px;
     margin: 0 auto;
     aspect-ratio: 9/16;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.video-container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 30px rgba(103, 58, 183, 0.4);
 }
 
 .video-wrapper {
@@ -248,24 +245,35 @@ body {
     height: 100%;
 }
 
-.video-placeholder {
+/* YouTube Container */
+.youtube-container {
     position: relative;
     width: 100%;
     height: 100%;
     background: #000;
+}
+
+.video-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
     cursor: pointer;
-    overflow: hidden;
+    z-index: 2;
+    transition: opacity 0.3s ease;
+}
+
+.video-placeholder.hidden {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .video-thumbnail {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.video-placeholder:hover .video-thumbnail {
-    transform: scale(1.05);
 }
 
 .play-overlay {
@@ -273,23 +281,81 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    background: rgba(103, 58, 183, 0.8);
+    width: 60px;
+    height: 60px;
+    background: rgba(103, 58, 183, 0.9);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 24px;
     color: white;
     transition: all 0.3s ease;
-    z-index: 2;
+    z-index: 3;
+    border: 3px solid rgba(255, 255, 255, 0.3);
 }
 
 .video-placeholder:hover .play-overlay {
     background: rgba(233, 30, 99, 0.9);
     transform: translate(-50%, -50%) scale(1.1);
-    box-shadow: 0 0 20px rgba(233, 30, 99, 0.6);
+    box-shadow: 0 0 30px rgba(233, 30, 99, 0.6);
+}
+
+/* YouTube Embed */
+.youtube-embed-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.youtube-embed-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 12px;
+}
+
+/* Hide YouTube Controls dengan CSS */
+.youtube-embed-container iframe {
+    /* Sembunyikan kontrol YouTube */
+    position: relative;
+}
+
+/* Custom Video Controls */
+.custom-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.control-btn {
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #673ab7, #e91e63);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(103, 58, 183, 0.4);
+}
+
+.control-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(103, 58, 183, 0.6);
+}
+
+.control-btn:active {
+    transform: translateY(0);
 }
 
 /* TikTok Section */
@@ -365,13 +431,13 @@ body {
     gap: 6px;
     background: linear-gradient(135deg, #ff0050, #00f2ea);
     color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
+    padding: 10px 20px;
+    border-radius: 25px;
     text-decoration: none;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 14px;
     transition: all 0.3s ease;
-    box-shadow: 0 3px 10px rgba(255, 0, 80, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 0, 80, 0.3);
     position: relative;
     overflow: hidden;
 }
@@ -393,7 +459,7 @@ body {
 
 .tiktok-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(255, 0, 80, 0.5);
+    box-shadow: 0 8px 25px rgba(255, 0, 80, 0.5);
 }
 
 /* Ads Container */
@@ -405,7 +471,7 @@ body {
     background: rgba(255, 255, 255, 0.05);
     border: 2px dashed rgba(255, 255, 255, 0.2);
     border-radius: 8px;
-    padding: 20px 15px;
+    padding: 25px 15px;
     text-align: center;
     color: rgba(255, 255, 255, 0.5);
     font-size: 12px;
@@ -417,16 +483,16 @@ body {
     color: rgba(255, 255, 255, 0.8);
 }
 
-/* Responsive Design untuk Android */
+/* Responsive Design untuk Mobile */
 @media (max-width: 480px) {
     .container {
-        padding: 10px 8px;
-        max-width: 100%;
+        padding: 8px;
     }
     
     .main-content {
-        padding: 20px 12px;
+        padding: 15px 12px;
         border-radius: 12px;
+        max-width: 100%;
     }
     
     .main-name {
@@ -438,7 +504,8 @@ body {
     }
     
     .video-container {
-        max-width: 260px;
+        max-width: 100%;
+        aspect-ratio: 9/16;
     }
     
     .tiktok-cta {
@@ -448,15 +515,27 @@ body {
     .tiktok-cta p {
         font-size: 11px;
     }
+    
+    .control-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 14px;
+    }
+    
+    .custom-controls {
+        gap: 10px;
+    }
 }
 
 @media (max-width: 360px) {
-    .video-container {
-        max-width: 240px;
-    }
-    
     .main-name {
         font-size: 22px;
+    }
+    
+    .play-overlay {
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
     }
 }
 
