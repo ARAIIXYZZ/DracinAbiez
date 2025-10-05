@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    // Initialize YouTube Player
+    // Initialize YouTube Player dengan parameter yang lebih ketat
     window.onYouTubeIframeAPIReady = function() {
         youtubePlayer = new YT.Player('youtube-embed', {
             height: '100%',
@@ -29,13 +29,21 @@ document.addEventListener('DOMContentLoaded', function() {
             videoId: 'oeJ3JHggXVA',
             playerVars: {
                 'autoplay': 0,
-                'controls': 0, // Sembunyikan kontrol default YouTube
+                'controls': 0,
                 'disablekb': 1,
-                'fs': 0, // Nonaktifkan fullscreen button
+                'fs': 0,
                 'modestbranding': 1,
                 'rel': 0,
                 'showinfo': 0,
-                'iv_load_policy': 3
+                'iv_load_policy': 3,
+                'playsinline': 1,
+                'enablejsapi': 1,
+                'origin': window.location.origin,
+                'widget_referrer': window.location.href,
+                // Parameter untuk menyembunyikan elemen UI
+                'cc_load_policy': 0,
+                'hl': 'id',
+                'cc_lang_pref': 'id'
             },
             events: {
                 'onReady': onPlayerReady,
@@ -46,17 +54,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function onPlayerReady(event) {
         console.log('YouTube Player Ready');
-        // Sembunyikan placeholder saat player siap
         customControls.style.display = 'flex';
+        
+        // Tambahkan CSS untuk menyembunyikan elemen YouTube
+        hideYouTubeElements();
     }
 
     function onPlayerStateChange(event) {
-        // Update UI berdasarkan status player
         if (event.data === YT.PlayerState.PLAYING) {
             isPlaying = true;
             playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
             videoPlaceholder.classList.add('hidden');
             createClickParticles({ clientX: window.innerWidth/2, clientY: window.innerHeight/2 });
+            
+            // Sembunyikan elemen YouTube setelah video mulai diputar
+            setTimeout(hideYouTubeElements, 100);
         } else if (event.data === YT.PlayerState.PAUSED) {
             isPlaying = false;
             playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
@@ -65,6 +77,66 @@ document.addEventListener('DOMContentLoaded', function() {
             playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
             videoPlaceholder.classList.remove('hidden');
         }
+        
+        // Sembunyikan elemen YouTube secara berkala
+        setTimeout(hideYouTubeElements, 500);
+    }
+
+    // Fungsi untuk menyembunyikan elemen YouTube
+    function hideYouTubeElements() {
+        const iframe = document.querySelector('.youtube-embed-container iframe');
+        if (iframe) {
+            try {
+                // Coba akses document iframe
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                
+                // Sembunyikan berbagai elemen YouTube
+                const selectors = [
+                    '.ytp-chrome-top',
+                    '.ytp-title-channel',
+                    '.ytp-title-text',
+                    '.ytp-title-link',
+                    '.ytp-title',
+                    '.ytp-watermark',
+                    '.ytp-show-cards-title',
+                    '.ytp-chrome-controls',
+                    '.ytp-pause-overlay',
+                    '.ytp-ce-element'
+                ];
+                
+                selectors.forEach(selector => {
+                    const elements = iframeDoc.querySelectorAll(selector);
+                    elements.forEach(el => {
+                        el.style.display = 'none';
+                        el.style.opacity = '0';
+                        el.style.visibility = 'hidden';
+                    });
+                });
+            } catch (e) {
+                // Cross-origin restriction, gunakan metode lain
+                console.log('Tidak bisa mengakses iframe document karena cross-origin');
+            }
+        }
+        
+        // Tambahkan CSS untuk menyembunyikan elemen
+        const style = document.createElement('style');
+        style.textContent = `
+            .ytp-chrome-top,
+            .ytp-title-channel,
+            .ytp-title-text,
+            .ytp-title-link,
+            .ytp-title,
+            .ytp-chrome-controls,
+            .ytp-watermark,
+            .ytp-show-cards-title,
+            .ytp-pause-overlay,
+            .ytp-ce-element {
+                display: none !important;
+                opacity: 0 !important;
+                visibility: hidden !important;
+            }
+        `;
+        document.head.appendChild(style);
     }
 
     // Click on video placeholder to play
@@ -84,6 +156,9 @@ document.addEventListener('DOMContentLoaded', function() {
             playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
             videoPlaceholder.classList.add('hidden');
             createClickParticles({ clientX: window.innerWidth/2, clientY: window.innerHeight/2 });
+            
+            // Sembunyikan elemen YouTube
+            setTimeout(hideYouTubeElements, 100);
         }
     }
 
@@ -94,6 +169,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 youtubePlayer.pauseVideo();
             } else {
                 youtubePlayer.playVideo();
+                setTimeout(hideYouTubeElements, 100);
             }
         }
     });
@@ -150,7 +226,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Dracin Abiez Landing Page Loaded - Enhanced YouTube Player');
 });
 
-// Particle Systems (sama seperti sebelumnya)
+// Particle Systems
 function initParticleCanvas() {
     const canvas = document.getElementById('particle-canvas');
     const ctx = canvas.getContext('2d');
