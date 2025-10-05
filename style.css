@@ -53,6 +53,99 @@ body {
 .main-content {
     margin-bottom: 60px; /* Biar gak ketutup social bar */
 }
+/* Skip Controls */
+.control-btn {
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #673ab7, #e91e63);
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(103, 58, 183, 0.4);
+    position: relative;
+}
+
+/* Progress Bar dengan Clickable Areas */
+.progress-container {
+    width: 100%;
+    max-width: 320px;
+    margin: 15px auto;
+    position: relative;
+    height: 30px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+}
+
+.progress-handle {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    background: #e91e63;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.progress-click-areas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.click-area {
+    flex: 1;
+    height: 100%;
+    cursor: pointer;
+    opacity: 0;
+}
+
+.click-area[data-action="rewind"] {
+    background: rgba(255, 0, 0, 0.1);
+}
+
+.click-area[data-action="forward"] {
+    background: rgba(0, 255, 0, 0.1);
+}
+
+/* Popunder Overlay (Transparan) */
+.popunder-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+}
+
+/* Custom Controls Layout */
+.custom-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+}
 /* Floating Particles */
 .floating-particles {
     position: fixed;
