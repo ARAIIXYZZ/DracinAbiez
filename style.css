@@ -49,17 +49,9 @@ body {
     z-index: 1000;
 }
 
-/* Banner Ads Styling */
-.banner-ads {
-    width: 100%;
-    max-width: 300px;
-    margin: 0 auto;
-    border-radius: 12px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 15px;
-    margin-bottom: 15px;
-    text-align: center;
+/* Adjust main content untuk social bar */
+.main-content {
+    margin-bottom: 60px; /* Biar gak ketutup social bar */
 }
 /* Floating Particles */
 .floating-particles {
