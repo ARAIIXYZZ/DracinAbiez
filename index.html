@@ -45,9 +45,7 @@
                                 <img src="https://img.youtube.com/vi/vXsTBYCjPlQ/maxresdefault.jpg" 
                                      alt="Drama China Preview" class="video-thumbnail" id="video-thumbnail">
                             </div>
-                            <div class="youtube-cropped-container" id="youtube-cropped">
-                                <!-- YouTube iframe akan dimasukkan via JavaScript -->
-                            </div>
+                            <div id="youtube-player"></div>
                         </div>
                     </div>
                 </div>
@@ -73,17 +71,6 @@
                 </button>
             </div>
 
-            <!-- Video Progress dengan Clickable Areas -->
-            <div class="progress-container" id="progress-container">
-                <div class="progress-bar" id="progress-bar">
-                    <div class="progress-handle" id="progress-handle"></div>
-                </div>
-                <div class="progress-click-areas">
-                    <div class="click-area" data-action="rewind"></div>
-                    <div class="click-area" data-action="forward"></div>
-                </div>
-            </div>
-
             <!-- Native Banner Ads -->
             <div class="ads-container">
                 <div class="native-banner-ads">
@@ -106,9 +93,6 @@
         </div>
     </div>
 
-    <!-- Popunder Trigger Overlay (Transparan) -->
-    <div class="popunder-overlay" id="popunder-overlay"></div>
-
-    <script src="script-enhanced.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
