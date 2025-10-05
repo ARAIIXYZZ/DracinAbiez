@@ -17,6 +17,88 @@ body {
     position: relative;
 }
 
+/* Particle Canvas */
+#particle-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Floating Particles */
+.floating-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.floating-particle {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: float 6s infinite ease-in-out;
+}
+
+.floating-particle:nth-child(odd) {
+    background: rgba(103, 58, 183, 0.6);
+}
+
+.floating-particle:nth-child(3n) {
+    background: rgba(233, 30, 99, 0.6);
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.7;
+    }
+    50% {
+        transform: translateY(-20px) rotate(180deg);
+        opacity: 1;
+    }
+}
+
+/* Sparkle Effects */
+.sparkle-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.sparkle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: sparkle 1.5s infinite;
+    box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes sparkle {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 /* Container */
 .container {
     width: 100%;
@@ -45,6 +127,7 @@ body {
     position: relative;
     overflow: hidden;
     margin: 10px 0;
+    backdrop-filter: blur(10px);
 }
 
 .main-content::before {
@@ -55,6 +138,16 @@ body {
     right: 0;
     height: 3px;
     background: linear-gradient(90deg, #673ab7, #e91e63, #2196f3);
+    animation: gradientShift 3s infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
 }
 
 /* Name Container */
@@ -73,6 +166,17 @@ body {
     margin-bottom: 8px;
     letter-spacing: 1px;
     line-height: 1.1;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    }
+    to {
+        text-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 0 0 30px rgba(255, 255, 255, 0.4);
+    }
 }
 
 .name-underline {
@@ -81,6 +185,18 @@ body {
     background: linear-gradient(90deg, #673ab7, #e91e63);
     margin: 0 auto;
     border-radius: 2px;
+    animation: underlinePulse 2s infinite;
+}
+
+@keyframes underlinePulse {
+    0%, 100% {
+        transform: scaleX(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scaleX(1.2);
+        opacity: 0.8;
+    }
 }
 
 /* Tagline */
@@ -90,6 +206,18 @@ body {
     margin-bottom: 20px;
     font-weight: 300;
     letter-spacing: 0.5px;
+    animation: fadeIn 2s ease-in;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Video Section */
@@ -106,6 +234,12 @@ body {
     max-width: 280px;
     margin: 0 auto;
     aspect-ratio: 9/16;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(103, 58, 183, 0.4);
 }
 
 .video-wrapper {
@@ -120,12 +254,18 @@ body {
     height: 100%;
     background: #000;
     cursor: pointer;
+    overflow: hidden;
 }
 
 .video-thumbnail {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.video-placeholder:hover .video-thumbnail {
+    transform: scale(1.05);
 }
 
 .play-overlay {
@@ -143,11 +283,13 @@ body {
     font-size: 20px;
     color: white;
     transition: all 0.3s ease;
+    z-index: 2;
 }
 
 .video-placeholder:hover .play-overlay {
     background: rgba(233, 30, 99, 0.9);
     transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 20px rgba(233, 30, 99, 0.6);
 }
 
 /* TikTok Section */
@@ -160,6 +302,32 @@ body {
     border-radius: 12px;
     padding: 15px;
     border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.tiktok-cta::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #ff0050, #00f2ea, #ff0050);
+    z-index: -1;
+    border-radius: 14px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tiktok-cta:hover::before {
+    opacity: 1;
+}
+
+.tiktok-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(255, 0, 80, 0.2);
 }
 
 .tiktok-cta i.fab {
@@ -167,6 +335,16 @@ body {
     color: #ff0050;
     margin-bottom: 10px;
     display: block;
+    animation: tiktokPulse 2s infinite;
+}
+
+@keyframes tiktokPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
 }
 
 .tiktok-cta p {
@@ -194,11 +372,28 @@ body {
     font-size: 12px;
     transition: all 0.3s ease;
     box-shadow: 0 3px 10px rgba(255, 0, 80, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.tiktok-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.tiktok-btn:hover::before {
+    left: 100%;
 }
 
 .tiktok-btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 5px 15px rgba(255, 0, 80, 0.4);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 0, 80, 0.5);
 }
 
 /* Ads Container */
@@ -214,6 +409,12 @@ body {
     text-align: center;
     color: rgba(255, 255, 255, 0.5);
     font-size: 12px;
+    transition: all 0.3s ease;
+}
+
+.ads-placeholder:hover {
+    border-color: rgba(103, 58, 183, 0.5);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 /* Responsive Design untuk Android */
