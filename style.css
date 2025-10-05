@@ -28,7 +28,39 @@ body {
     z-index: 1;
     pointer-events: none;
 }
+/* Native Banner Ads Styling */
+.native-banner-ads {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    margin-bottom: 15px;
+}
 
+/* Social Bar Ads Styling */
+.social-bar-ads {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+/* Banner Ads Styling */
+.banner-ads {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+}
 /* Floating Particles */
 .floating-particles {
     position: fixed;
