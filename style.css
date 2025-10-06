@@ -5,31 +5,7 @@
     box-sizing: border-box;
     font-family: 'Poppins', 'Segoe UI', sans-serif;
 }
-/* Native Banner Ads Styling */
-.native-banner-ads {
-    width: 100%;
-    max-width: 320px;
-    margin: 0 auto;
-    border-radius: 12px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 15px;
-    margin-bottom: 15px;
-}
 
-/* Social Bar Ads Styling */
-.social-bar-ads {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-/* Adjust main content untuk social bar */
-.main-content {
-    margin-bottom: 60px; /* Biar gak ketutup social bar */
-}
 body {
     background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
     color: #fff;
@@ -52,39 +28,7 @@ body {
     z-index: 1;
     pointer-events: none;
 }
-/* Native Banner Ads Styling */
-.native-banner-ads {
-    width: 100%;
-    max-width: 320px;
-    margin: 0 auto;
-    border-radius: 12px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 15px;
-    margin-bottom: 15px;
-}
 
-/* Social Bar Ads Styling */
-.social-bar-ads {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1000;
-}
-
-/* Banner Ads Styling */
-.banner-ads {
-    width: 100%;
-    max-width: 300px;
-    margin: 0 auto;
-    border-radius: 12px;
-    overflow: hidden;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 15px;
-    margin-bottom: 15px;
-    text-align: center;
-}
 /* Floating Particles */
 .floating-particles {
     position: fixed;
@@ -156,6 +100,15 @@ body {
     }
 }
 
+/* Social Bar Ads */
+.social-bar-ads {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
 /* Container - FIXED FOR MOBILE */
 .container {
     width: 100%;
@@ -186,6 +139,7 @@ body {
     overflow: hidden;
     margin: 5px 0;
     backdrop-filter: blur(10px);
+    margin-bottom: 60px; /* Biar gak ketutup social bar */
 }
 
 .main-content::before {
@@ -378,38 +332,21 @@ body {
     pointer-events: none;
 }
 
-/* Custom Video Controls */
-.custom-controls {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
+/* Native Banner Ads Styling */
+.native-banner-ads {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    border-radius: 12px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+/* Ads Container */
+.ads-container {
     margin-top: 15px;
-    margin-bottom: 10px;
-}
-
-.control-btn {
-    width: 45px;
-    height: 45px;
-    border: none;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #673ab7, #e91e63);
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 15px rgba(103, 58, 183, 0.4);
-}
-
-.control-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(103, 58, 183, 0.6);
-}
-
-.control-btn:active {
-    transform: translateY(0);
 }
 
 /* TikTok Section */
@@ -516,27 +453,6 @@ body {
     box-shadow: 0 8px 25px rgba(255, 0, 80, 0.5);
 }
 
-/* Ads Container */
-.ads-container {
-    margin-top: 15px;
-}
-
-.ads-placeholder {
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px dashed rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    padding: 25px 15px;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 12px;
-    transition: all 0.3s ease;
-}
-
-.ads-placeholder:hover {
-    border-color: rgba(103, 58, 183, 0.5);
-    color: rgba(255, 255, 255, 0.8);
-}
-
 /* Responsive Design untuk Mobile */
 @media (max-width: 480px) {
     .container {
@@ -574,16 +490,6 @@ body {
     
     .tiktok-cta p {
         font-size: 11px;
-    }
-    
-    .control-btn {
-        width: 40px;
-        height: 40px;
-        font-size: 14px;
-    }
-    
-    .custom-controls {
-        gap: 10px;
     }
 }
 
