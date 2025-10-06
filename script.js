@@ -4,16 +4,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const videoPlaceholder = document.getElementById('video-placeholder');
     const playOverlay = document.getElementById('play-overlay');
     const youtubeCropped = document.getElementById('youtube-cropped');
-    const customControls = document.getElementById('custom-controls');
-    
-    // Custom control buttons
-    const playPauseBtn = document.getElementById('play-pause-btn');
-    const muteBtn = document.getElementById('mute-btn');
-    const fullscreenBtn = document.getElementById('fullscreen-btn');
     
     let youtubePlayer;
     let isPlaying = false;
-    let isMuted = false;
 
     // YouTube API
     const tag = document.createElement('script');
@@ -55,7 +48,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function onPlayerReady(event) {
         console.log('YouTube Player Ready dengan Cropping');
-        customControls.style.display = 'flex';
         
         // Nonaktifkan semua interaksi dengan iframe
         disableYouTubeInteractions();
@@ -64,15 +56,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function onPlayerStateChange(event) {
         if (event.data === YT.PlayerState.PLAYING) {
             isPlaying = true;
-            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
             videoPlaceholder.classList.add('hidden');
             createClickParticles({ clientX: window.innerWidth/2, clientY: window.innerHeight/2 });
         } else if (event.data === YT.PlayerState.PAUSED) {
             isPlaying = false;
-            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
         } else if (event.data === YT.PlayerState.ENDED) {
             isPlaying = false;
-            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
             videoPlaceholder.classList.remove('hidden');
         }
     }
@@ -122,60 +111,10 @@ document.addEventListener('DOMContentLoaded', function() {
         if (youtubePlayer) {
             youtubePlayer.playVideo();
             isPlaying = true;
-            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
             videoPlaceholder.classList.add('hidden');
             createClickParticles({ clientX: window.innerWidth/2, clientY: window.innerHeight/2 });
         }
     }
-
-    // Custom Controls
-    playPauseBtn.addEventListener('click', function() {
-        if (youtubePlayer) {
-            if (isPlaying) {
-                youtubePlayer.pauseVideo();
-            } else {
-                youtubePlayer.playVideo();
-            }
-        }
-        createButtonParticles(this);
-    });
-
-    muteBtn.addEventListener('click', function() {
-        if (youtubePlayer) {
-            if (isMuted) {
-                youtubePlayer.unMute();
-                muteBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
-                isMuted = false;
-            } else {
-                youtubePlayer.mute();
-                muteBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
-                isMuted = true;
-            }
-            createButtonParticles(muteBtn);
-        }
-    });
-
-    fullscreenBtn.addEventListener('click', function() {
-        const videoContainer = document.querySelector('.video-container');
-        if (!document.fullscreenElement) {
-            if (videoContainer.requestFullscreen) {
-                videoContainer.requestFullscreen();
-            } else if (videoContainer.webkitRequestFullscreen) {
-                videoContainer.webkitRequestFullscreen();
-            } else if (videoContainer.msRequestFullscreen) {
-                videoContainer.msRequestFullscreen();
-            }
-        } else {
-            if (document.exitFullscreen) {
-                document.exitFullscreen();
-            } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-            }
-        }
-        createButtonParticles(fullscreenBtn);
-    });
 
     // TikTok button click tracking
     const tiktokBtn = document.querySelector('.tiktok-btn');
@@ -192,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('Dracin Abiez Landing Page Loaded - YouTube dengan Cropping');
 });
 
-// Particle Systems (tetap sama)
+// Particle Systems
 function initParticleCanvas() {
     const canvas = document.getElementById('particle-canvas');
     const ctx = canvas.getContext('2d');
