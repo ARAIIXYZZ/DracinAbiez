@@ -1,12 +1,23 @@
-// Enhanced JavaScript untuk YouTube Embed dengan Cropping
+// Enhanced JavaScript untuk YouTube Embed dengan Cropping dan Progress Bar
 document.addEventListener('DOMContentLoaded', function() {
     // Elements
     const videoPlaceholder = document.getElementById('video-placeholder');
     const playOverlay = document.getElementById('play-overlay');
     const youtubeCropped = document.getElementById('youtube-cropped');
     
+    // Progress Bar Elements
+    const progressContainer = document.getElementById('progress-container');
+    const progressBar = document.getElementById('progress-bar');
+    const progressFill = document.getElementById('progress-fill');
+    const progressThumb = document.getElementById('progress-thumb');
+    const timeDisplay = document.getElementById('time-display');
+    
     let youtubePlayer;
     let isPlaying = false;
+    let isDragging = false;
+    let currentTime = 0;
+    let duration = 0;
+    let progressInterval;
 
     // YouTube API
     const tag = document.createElement('script');
@@ -47,10 +58,15 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     function onPlayerReady(event) {
-        console.log('YouTube Player Ready dengan Cropping');
+        console.log('YouTube Player Ready dengan Cropping dan Progress Bar');
+        duration = youtubePlayer.getDuration();
+        updateTimeDisplay(0, duration);
         
         // Nonaktifkan semua interaksi dengan iframe
         disableYouTubeInteractions();
+        
+        // Setup progress bar events
+        setupProgressBar();
     }
 
     function onPlayerStateChange(event) {
@@ -58,11 +74,19 @@ document.addEventListener('DOMContentLoaded', function() {
             isPlaying = true;
             videoPlaceholder.classList.add('hidden');
             createClickParticles({ clientX: window.innerWidth/2, clientY: window.innerHeight/2 });
+            
+            // Start updating progress
+            startProgressUpdate();
         } else if (event.data === YT.PlayerState.PAUSED) {
             isPlaying = false;
+            stopProgressUpdate();
         } else if (event.data === YT.PlayerState.ENDED) {
             isPlaying = false;
             videoPlaceholder.classList.remove('hidden');
+            stopProgressUpdate();
+            resetProgress();
+        } else if (event.data === YT.PlayerState.BUFFERING) {
+            // Tetap update progress saat buffering
         }
     }
 
@@ -97,6 +121,129 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Setup Progress Bar Events
+    function setupProgressBar() {
+        // Click on progress bar to seek
+        progressBar.addEventListener('click', function(e) {
+            if (!youtubePlayer) return;
+            
+            const rect = progressBar.getBoundingClientRect();
+            const percent = (e.clientX - rect.left) / rect.width;
+            seekTo(percent);
+        });
+
+        // Drag progress thumb
+        progressThumb.addEventListener('mousedown', startDrag);
+        progressThumb.addEventListener('touchstart', startDrag);
+
+        // Global mouse/touch events for dragging
+        document.addEventListener('mousemove', handleDrag);
+        document.addEventListener('touchmove', handleDrag);
+        document.addEventListener('mouseup', stopDrag);
+        document.addEventListener('touchend', stopDrag);
+    }
+
+    function startDrag(e) {
+        isDragging = true;
+        progressThumb.style.cursor = 'grabbing';
+        e.preventDefault();
+    }
+
+    function handleDrag(e) {
+        if (!isDragging || !youtubePlayer) return;
+        
+        const rect = progressBar.getBoundingClientRect();
+        let clientX;
+        
+        if (e.type === 'touchmove') {
+            clientX = e.touches[0].clientX;
+        } else {
+            clientX = e.clientX;
+        }
+        
+        let percent = (clientX - rect.left) / rect.width;
+        percent = Math.max(0, Math.min(1, percent)); // Clamp between 0-1
+        
+        updateProgressVisual(percent);
+        
+        // Update time display during drag
+        const seekTime = percent * duration;
+        updateTimeDisplay(seekTime, duration);
+    }
+
+    function stopDrag() {
+        if (!isDragging || !youtubePlayer) return;
+        
+        isDragging = false;
+        progressThumb.style.cursor = 'grab';
+        
+        // Seek to the final position
+        const percent = parseFloat(progressFill.style.width) / 100;
+        seekTo(percent);
+    }
+
+    function seekTo(percent) {
+        const seekTime = percent * duration;
+        youtubePlayer.seekTo(seekTime, true);
+        
+        if (!isPlaying) {
+            youtubePlayer.playVideo();
+        }
+        
+        createClickParticles({ clientX: window.innerWidth/2, clientY: window.innerHeight/2 });
+    }
+
+    function startProgressUpdate() {
+        stopProgressUpdate(); // Clear any existing interval
+        
+        progressInterval = setInterval(function() {
+            if (youtubePlayer && !isDragging) {
+                currentTime = youtubePlayer.getCurrentTime();
+                duration = youtubePlayer.getDuration();
+                
+                const percent = (currentTime / duration) * 100;
+                updateProgressVisual(percent / 100);
+                updateTimeDisplay(currentTime, duration);
+            }
+        }, 500);
+    }
+
+    function stopProgressUpdate() {
+        if (progressInterval) {
+            clearInterval(progressInterval);
+            progressInterval = null;
+        }
+    }
+
+    function updateProgressVisual(percent) {
+        const percentValue = percent * 100;
+        progressFill.style.width = `${percentValue}%`;
+        progressThumb.style.left = `${percentValue}%`;
+    }
+
+    function updateTimeDisplay(current, total) {
+        const currentFormatted = formatTime(current);
+        const totalFormatted = formatTime(total);
+        timeDisplay.textContent = `${currentFormatted} / ${totalFormatted}`;
+    }
+
+    function formatTime(seconds) {
+        const hours = Math.floor(seconds / 3600);
+        const minutes = Math.floor((seconds % 3600) / 60);
+        const secs = Math.floor(seconds % 60);
+        
+        if (hours > 0) {
+            return `${hours}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        } else {
+            return `${minutes}:${secs.toString().padStart(2, '0')}`;
+        }
+    }
+
+    function resetProgress() {
+        updateProgressVisual(0);
+        updateTimeDisplay(0, duration);
+    }
+
     // Click on video placeholder to play
     videoPlaceholder.addEventListener('click', function() {
         playVideo();
@@ -128,10 +275,10 @@ document.addEventListener('DOMContentLoaded', function() {
     initFloatingParticles();
     initSparkleEffects();
 
-    console.log('Dracin Abiez Landing Page Loaded - YouTube dengan Cropping');
+    console.log('Dracin Abiez Landing Page Loaded - YouTube dengan Cropping dan Progress Bar');
 });
 
-// Particle Systems
+// Particle Systems (tetap sama)
 function initParticleCanvas() {
     const canvas = document.getElementById('particle-canvas');
     const ctx = canvas.getContext('2d');
