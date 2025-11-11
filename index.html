@@ -1,89 +1,549 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dracin Abiez - Drama China</title>
-    <link rel="stylesheet" href="style.css">
+    <title>DesireConnect - Find Your Perfect Match</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script type='text/javascript' src='//spaniardinformationbookworm.com/a2/6b/18/a26b180d886de45b6d20f7541482b591.js'></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #e94560;
+            --secondary: #0f3460;
+            --accent: #ff6b8b;
+            --dark: #1a1a2e;
+            --darker: #16213e;
+            --light: #ffffff;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+            color: var(--light);
+            line-height: 1.5;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 15px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Header Styles */
+        header {
+            padding: 15px 0;
+            text-align: center;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--primary);
+            text-shadow: 0 0 15px rgba(233, 69, 96, 0.4);
+        }
+        
+        /* Hero Section - DIKOMPAKKAN */
+        .hero {
+            padding: 40px 0 20px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.2;
+            animation: fadeIn 1.2s ease;
+        }
+        
+        .highlight {
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(233, 69, 96, 0.4);
+        }
+        
+        .subtitle {
+            font-size: 16px;
+            font-weight: 300;
+            margin-bottom: 25px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeIn 1.4s ease;
+            opacity: 0.9;
+        }
+        
+        /* Features Section - DIKOMPAKKAN */
+        .features {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 25px 0;
+        }
+        
+        .feature {
+            flex: 1;
+            min-width: 180px;
+            max-width: 200px;
+            padding: 18px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+        
+        .feature:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+        
+        .feature:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+        
+        .feature:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+        
+        .feature:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            border-color: rgba(233, 69, 96, 0.3);
+        }
+        
+        .feature-icon {
+            width: 45px;
+            height: 45px;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(233, 69, 96, 0.1);
+            border-radius: 50%;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-icon i {
+            font-size: 18px;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .feature:hover .feature-icon {
+            background: rgba(233, 69, 96, 0.2);
+            transform: scale(1.05);
+        }
+        
+        .feature:hover .feature-icon i {
+            color: var(--accent);
+        }
+        
+        .feature-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            margin-bottom: 6px;
+        }
+        
+        .feature p {
+            font-size: 11px;
+            opacity: 0.8;
+            line-height: 1.4;
+        }
+        
+        /* CTA Section - DIKOMPAKKAN */
+        .cta-section {
+            text-align: center;
+            padding: 25px 0;
+            opacity: 0;
+            animation: fadeIn 1s ease 1s forwards;
+            position: relative;
+        }
+        
+        .cta-text {
+            font-size: 16px;
+            margin-bottom: 15px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            font-weight: 300;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 10px 25px;
+            background: linear-gradient(45deg, var(--primary), var(--accent));
+            color: white;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 3px 12px rgba(233, 69, 96, 0.4);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.5);
+            background: linear-gradient(45deg, var(--accent), var(--primary));
+        }
+        
+        /* Testimonials - DIKOMPAKKAN */
+        .testimonial-section {
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: var(--light);
+        }
+        
+        .testimonial-container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            height: 160px;
+            overflow: hidden;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+        }
+        
+        .testimonial {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .testimonial.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .testimonial-text {
+            font-size: 13px;
+            margin-bottom: 12px;
+            font-style: italic;
+            line-height: 1.4;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 8px;
+        }
+        
+        .author-info {
+            text-align: right;
+        }
+        
+        .author-name {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 13px;
+        }
+        
+        .author-details {
+            font-size: 11px;
+            opacity: 0.8;
+            margin-top: 1px;
+        }
+        
+        .country-flag {
+            font-size: 18px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 15px 0;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.6);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from { 
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 12px;
+            }
+            
+            header {
+                padding: 12px 0;
+            }
+            
+            .logo {
+                font-size: 22px;
+            }
+            
+            .hero {
+                padding: 30px 0 15px 0;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+            
+            .subtitle {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            
+            .features {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                margin: 20px 0;
+            }
+            
+            .feature {
+                min-width: 100%;
+                max-width: 100%;
+                padding: 15px 12px;
+            }
+            
+            .feature-icon {
+                width: 40px;
+                height: 40px;
+                margin-bottom: 8px;
+            }
+            
+            .feature-icon i {
+                font-size: 16px;
+            }
+            
+            .feature-title {
+                font-size: 14px;
+            }
+            
+            .feature p {
+                font-size: 10px;
+            }
+            
+            .cta-section {
+                padding: 20px 0;
+            }
+            
+            .cta-text {
+                font-size: 14px;
+                margin-bottom: 12px;
+            }
+            
+            .btn {
+                padding: 8px 20px;
+                font-size: 12px;
+            }
+            
+            .testimonial-container {
+                height: 180px;
+                margin: 20px auto;
+                padding: 15px;
+            }
+            
+            .testimonial {
+                padding: 15px;
+            }
+            
+            .testimonial-text {
+                font-size: 12px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 22px;
+            }
+            
+            .subtitle {
+                font-size: 13px;
+            }
+            
+            .cta-text {
+                font-size: 13px;
+            }
+            
+            .testimonial-container {
+                height: 200px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Background Elements -->
-    <canvas id="particle-canvas"></canvas>
-    <div class="floating-particles" id="floating-particles"></div>
-    <div class="sparkle-container" id="sparkle-container"></div>
-    
-    <!-- Social Bar Ads -->
-    <div class="social-bar-ads">
-        <script type='text/javascript' src='//spaniardinformationbookworm.com/76/38/e6/7638e6f64378994e0977b74464edbc77.js'></script>
-    </div>
     
     <div class="container">
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Name Area -->
-            <div class="name-container">
-                <h1 class="main-name">Dracin Abiez</h1>
-                <div class="name-underline"></div>
-            </div>
-
-            <p class="tagline">Drama China Eksklusif</p>
-
-            <!-- Video Player Section -->
-            <div class="video-section">
-                <div class="video-container">
-                    <div class="video-wrapper">
-                        <div class="youtube-container" id="youtube-container">
-                            <div class="video-placeholder" id="video-placeholder">
-                                <div class="play-overlay" id="play-overlay">
-                                    <i class="fas fa-play"></i>
-                                </div>
-                                <img src="https://img.youtube.com/vi/vXsTBYCjPlQ/maxresdefault.jpg" 
-                                     alt="Drama China Preview" class="video-thumbnail" id="video-thumbnail">
-                            </div>
-                            <div class="youtube-cropped-container" id="youtube-cropped">
-                                <!-- YouTube iframe akan dimasukkan via JavaScript -->
-                            </div>
-                            
-                            <!-- Progress Bar Container -->
-                            <div class="progress-container" id="progress-container">
-                                <div class="progress-bar" id="progress-bar">
-                                    <div class="progress-fill" id="progress-fill"></div>
-                                    <div class="progress-thumb" id="progress-thumb"></div>
-                                </div>
-                                <div class="time-display" id="time-display">0:00 / 0:00</div>
-                            </div>
+        <header>
+            <div class="logo">DesireConnect</div>
+        </header>
+        
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Find Your <span class="highlight">Perfect Match</span> Today</h1>
+                <p class="subtitle">Join thousands who have discovered meaningful connections and unforgettable experiences. Your next adventure in romance is just a click away.</p>
+                
+                <div class="features">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-heart"></i>
                         </div>
+                        <h3 class="feature-title">Authentic Connections</h3>
+                        <p>Meet real people looking for genuine relationships and exciting encounters.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <h3 class="feature-title">Global Community</h3>
+                        <p>Connect with fascinating individuals from around the world.</p>
+                    </div>
+                    
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <h3 class="feature-title">Discreet & Secure</h3>
+                        <p>Your privacy is our priority. Explore connections safely.</p>
                     </div>
                 </div>
             </div>
-
-            <!-- Popunder Ads Script -->
-            <script type='text/javascript' src='//spaniardinformationbookworm.com/1c/9d/e0/1c9de070d6a564e9b21e3b0cbef02909.js'></script>
-
-            <!-- Native Banner Ads -->
-            <div class="ads-container">
-                <div class="native-banner-ads">
-                    <script async="async" data-cfasync="false" src="//spaniardinformationbookworm.com/11d3aaa3f09eae8707d3657178abe85e/invoke.js"></script>
-                    <div id="container-11d3aaa3f09eae8707d3657178abe85e"></div>
+        </section>
+        
+        <section class="cta-section">
+            <p class="cta-text">Ready to explore a world of exciting possibilities and meaningful connections?</p>
+            <a href="https://rnwklm.dremluv.com/?utm_source=da57dc555e50572d&ban=inst&j1=1&s1=232072&s2=2157823&s3=ARAIIXYZZ" class="btn">Begin Your Journey</a>
+        </section>
+        
+        <section class="testimonial-section">
+            <h2 class="section-title">Success Stories</h2>
+            <div class="testimonial-container">
+                <div class="testimonial active">
+                    <p class="testimonial-text">I was skeptical about online dating at first, but DesireConnect completely changed my perspective. The quality of matches is exceptional, and I've met incredible people.</p>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <div class="author-name">Michael Richardson</div>
+                            <div class="author-details">32 • New York, USA</div>
+                        </div>
+                        <div class="country-flag">🇺🇸</div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <p class="testimonial-text">Moving to London was challenging, but DesireConnect helped me build an amazing social circle. The international community exposed me to diverse cultures.</p>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <div class="author-name">Sarah Chen</div>
+                            <div class="author-details">28 • London, UK</div>
+                        </div>
+                        <div class="country-flag">🇬🇧</div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <p class="testimonial-text">As someone who values privacy, I was hesitant to try online dating. DesireConnect's security features gave me the confidence to be my authentic self.</p>
+                    <div class="testimonial-author">
+                        <div class="author-info">
+                            <div class="author-name">David Müller</div>
+                            <div class="author-details">35 • Berlin, Germany</div>
+                        </div>
+                        <div class="country-flag">🇩🇪</div>
+                    </div>
                 </div>
             </div>
-
-            <!-- TikTok CTA Section -->
-            <div class="tiktok-section">
-                <div class="tiktok-cta">
-                    <i class="fab fa-tiktok"></i>
-                    <p>Jangan lupa follow TikTok <strong>Dracin Abiez</strong> untuk konten drama menarik selanjutnya!</p>
-                    <a href="https://tiktok.com/@dracinabiez" class="tiktok-btn" target="_blank">
-                        <i class="fab fa-tiktok"></i>
-                        Follow TikTok
-                    </a>
-                </div>
-            </div>
-        </div>
+        </section>
+        
+        <footer>
+            <p>© 2023 DesireConnect. All rights reserved. | Privacy Policy | Terms of Service</p>
+        </footer>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        // Testimonial rotation
+        document.addEventListener('DOMContentLoaded', function() {
+            const testimonials = document.querySelectorAll('.testimonial');
+            let currentTestimonial = 0;
+            
+            function showNextTestimonial() {
+                testimonials[currentTestimonial].classList.remove('active');
+                currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+                testimonials[currentTestimonial].classList.add('active');
+            }
+            
+            setInterval(showNextTestimonial, 5000);
+        });
+    </script>
 </body>
 </html>
